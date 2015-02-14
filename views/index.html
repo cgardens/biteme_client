@@ -2,18 +2,25 @@
 <html>
 <head>
   <link type='text/css' rel='stylesheet' href='stylesheets/stylesheet.css'>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js'></script>
   <script src='http://code.jquery.com/jquery-git2.js'></script>
   <script src='lib/annyang.js'></script>
   <script src='lib/responsivevoice.js'></script>
   <script src='scripts/speechToText.js'></script>
 </head>
-<body>
-  <button id='startSession'>Start</button>
+<body ng-app='MyRecipe'>
+  <div ng-controller='RecipeController'>
+    <button id='startSession' ng-click='loadRecipe()'>Start</button>
 
-  <div id='textToSpeech'>
-    <textarea id='text' cols='20' rows='2'></textarea>
-    <input onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
-    />
+    <div id='textToSpeech'>
+      <p></p>
+      <textarea id='text'></textarea>
+      <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+      />
+    </div>
+
+    <span id="countdown" class="timer"></span>
   </div>
 </body>
 </html>
