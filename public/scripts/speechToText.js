@@ -27,6 +27,7 @@ var activateCaesar = function(str) {
 };
 
 var setTextArea = function(str) {
+  $('#textToSpeech p').text(str);
   $('#textToSpeech textarea').text(str);
 };
 
