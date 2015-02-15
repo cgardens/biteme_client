@@ -1,18 +1,33 @@
-var biteMe = angular.module('biteMe', [ 'ui.router' ]);
+var BiteMe = angular.module('BiteMe', [ 'ui.router' ]);
 
-biteMe.config(function($stateProvider, $urlRouterProvider) {
+BiteMe.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
 
-  .state('search', {
-    url: '/search',
-    templateUrl: 'partials/search.html'
+  .state('home', {
+    url: '/',
+    templateUrl: 'partials/authentication.html'
   })
 
-  .state('/', {
-    url: '/',
-    template: "<h1>home</h1>"
+  .state('search', {
+    url: '/search',
+    templateUrl: 'partials/search_form.html'
   })
+
+  .state('search_results', {
+    url: '/search_results',
+    templateUrl: 'partials/search_results.html'
+  })
+
+  .state('recipe', {
+    url: '/recipes/:id',
+    templateUrl: 'partials/recipe_show.html'
+  })
+
+  // .state('user', {
+  //   url: '/users/:id',
+  //   templateUrl: 'partials/user_show.html'
+  // })
 
   $urlRouterProvider.otherwise('/');
 })

@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link type='text/css' rel='stylesheet' href='stylesheets/stylesheet.css'>
+  <!-- css -->
+  <link type='text/css' rel='stylesheet' href='../stylesheets/caesar.css'>
 
+  <!-- angular and jquery -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js'></script>
-  <script src='http://code.jquery.com/jquery-git2.js'></script>
-  <script src='lib/angular-ui-router.js'></script>
-  <script src='scripts/app.js'></script>
-  <script src='scripts/search.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular-resource.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js'></script>
+
+  <!-- vendor scripts -->
+  <script src='../lib/annyang.js'></script>
+  <script src='../lib/responsive_voice.js'></script>
+
+  <!-- personal scripts -->
+  <script src='../scripts/app.js'></script>
+  <script src='../scripts/speech_recognition.js'></script>
+
+  <title></title>
 </head>
-<body ng-app='biteMe'>
-  <div ui-view></div>
+<body ng-app='BiteMe'>
+
+  <ui-view></ui-view>
+
 </body>
 </html>
 
+<!-- <div ng-controller='RecipeController'>
+
+  <div id='textToSpeech'>
+    <p ng-bind='caesarSpeech'></p>
+    <textarea id='text' ng-bind='caesarSpeech'></textarea>
+    <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+    />
+  </div>
+
+  <span id='countdown' class='timer'></span>
+</div> -->
