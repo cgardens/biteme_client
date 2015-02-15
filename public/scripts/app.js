@@ -1,14 +1,18 @@
-angular.module('biteMe', [ 'searchCtrl'
+var biteMe = angular.module('biteMe', [ 'ui.router' ]);
 
-  ])
-
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+biteMe.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
 
-  .state('home', {
-    url: '/',
-    templateUrl: '../../views/templates/search.html',
-    controller: 'SearchController as a'
+  .state('search', {
+    url: '/search',
+    templateUrl: 'partials/search.html'
   })
+
+  .state('/', {
+    url: '/',
+    template: "<h1>home</h1>"
+  })
+
+  $urlRouterProvider.otherwise('/');
 })
