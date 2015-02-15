@@ -1,33 +1,43 @@
-var BiteMe = angular.module('BiteMe', [ 'ui.router' ]);
+angular.module('BiteMe', [ // 'app.factories',
+                           'auth.controllers',
+                           'recipe.controllers',
+                           'search.controllers',
+                           'user.controllers',
+                           'ui.router' ])
 
-BiteMe.config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
 
-  $stateProvider
+    $stateProvider
 
-  .state('home', {
-    url: '/',
-    templateUrl: 'partials/authentication.html'
+    .state('home', {
+      url: '/',
+      templateUrl: 'partials/authentication.html',
+      controller: 'AuthCtrl as a'
+    })
+
+    .state('search', {
+      url: '/search',
+      templateUrl: 'partials/search_form.html',
+      controller: 'SearchFormCtrl as sf'
+    })
+
+    .state('search_results', {
+      url: '/search_results',
+      templateUrl: 'partials/search_results.html',
+      controller: 'SearchResultCtrl as sr'
+    })
+
+    .state('recipe', {
+      url: '/recipes/:recipeId',
+      templateUrl: 'partials/recipe_show.html',
+      controller: 'RecipeCtrl as r'
+    })
+
+    // .state('user', {
+    //   url: '/users/:userId',
+    //   templateUrl: 'partials/user_show.html',
+    //   controller: 'UserCtrl as u'
+    // })
+
+    $urlRouterProvider.otherwise('/');
   })
-
-  .state('search', {
-    url: '/search',
-    templateUrl: 'partials/search_form.html'
-  })
-
-  .state('search_results', {
-    url: '/search_results',
-    templateUrl: 'partials/search_results.html'
-  })
-
-  .state('recipe', {
-    url: '/recipes/:id',
-    templateUrl: 'partials/recipe_show.html'
-  })
-
-  // .state('user', {
-  //   url: '/users/:id',
-  //   templateUrl: 'partials/user_show.html'
-  // })
-
-  $urlRouterProvider.otherwise('/');
-})

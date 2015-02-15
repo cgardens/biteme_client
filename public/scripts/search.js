@@ -1,5 +1,9 @@
-angular.module('searchCtrl', [])
+angular.module('search.controllers', [])
 
-  .controller('SearchController', function($scope, $location, $state, $stateParams) {
+  .controller('SearchFormCtrl', function($scope, $http, $stateParams) {
+    $scope
+  })
 
+  .controller('SearchResultCtrl', function($scope, $http, $stateParams) {
+    $scope
   })
