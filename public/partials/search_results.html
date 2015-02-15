@@ -1,1 +1,17 @@
-<p>Search results page</p>
+<div>
+  <ul>
+    <form ng-show="newSearch">
+      <input ng-model="newSearch.term" type="text" placeholder="Enter recipe...">
+      <button ng-click="searchResults()">submit</button>
+    </form>
+
+
+    <li ng-repeat="recipe in recipes.results">
+      <img ng-src="{{recipe.imageURL}}" alt="recipe photo">
+      <div class="recipe-info">
+        <h2><a ng-href='#/recipes/{{recipe.recipeID}}'>{{recipe.title}}</a></h2>
+        <h3>{{recipe.rating}}</h3>
+      </div>
+    </li>
+  </ul>
+</div>
