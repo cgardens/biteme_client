@@ -3,12 +3,8 @@ angular.module('recipe.controllers', [])
   .controller('RecipeCtrl', function($scope, $http, $stateParams) {
     // get request
     $http.get('http://localhost:3000/recipes/' + $stateParams.recipeId)
-    .success(function(data) {
-      $scope.recipe = data;
-    })
-    .error(function(data) {
-      console.log('Error: ' + data);
-    })
+    .success(function(data) { $scope.recipe = data; })
+    .error(function(data) { console.log('Error: ' + data); })
 
     // recipe queries
     $scope.currentStep = 0;
