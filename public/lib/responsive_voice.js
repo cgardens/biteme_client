@@ -135,7 +135,7 @@ var ResponsiveVoice = function(){
           var v = window.speechSynthesis.getVoices();
 
           if (v.length==0 && (systemvoices==null || systemvoices.length==0)) {
-            console.log('Voice support NOT ready');
+            // console.log('Voice support NOT ready');
 
             voicesupport_attempts++;
             if (voicesupport_attempts > VOICESUPPORT_ATTEMPTLIMIT) {
@@ -148,7 +148,7 @@ var ResponsiveVoice = function(){
 
           }else{
 
-            console.log('Voice support ready');
+            // console.log('Voice support ready');
 
             clearInterval(gsvinterval);
 
@@ -169,7 +169,7 @@ var ResponsiveVoice = function(){
   function enableFallbackMode() {
 
     fallbackMode = true;
-    console.log('Voice not supported. Using fallback mode');
+    // console.log('Voice not supported. Using fallback mode');
 
     mapRVs();
 
@@ -280,7 +280,7 @@ var ResponsiveVoice = function(){
       profile.collectionvoice = {};
 
       if (profile.systemvoice==null) {
-        console.log('ERROR: No voice found for: ' + voicename);
+        // console.log('ERROR: No voice found for: ' + voicename);
         return;
       }
     }
@@ -311,8 +311,8 @@ var ResponsiveVoice = function(){
         msg.lang = profile.collectionvoice.lang || profile.systemvoice.lang;
         msg.onend = self.OnFinishedPlaying;
         msg.onerror = function(e){
-          console.log('Error');
-          console.log(e);
+          // console.log('Error');
+          // console.log(e);
         };
         //console.log(msg);
 
@@ -428,7 +428,7 @@ var ResponsiveVoice = function(){
               systemvoice: v,
               collectionvoice: vcoll
             };
-            console.log("Mapped " + rv.name + " to " + v.name);
+            // console.log("Mapped " + rv.name + " to " + v.name);
             break;
           }
 
@@ -439,7 +439,7 @@ var ResponsiveVoice = function(){
             systemvoice: {},
             collectionvoice: vcoll
           };
-          console.log("Mapped " + rv.name + " to " + vcoll.lang + " fallback voice");
+          // console.log("Mapped " + rv.name + " to " + vcoll.lang + " fallback voice");
           break;
 
         }

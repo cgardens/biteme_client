@@ -3,7 +3,6 @@
 var express   = require('express');
 var path      = require('path');
 var morgan    = require("morgan");
-var mongoose  = require("mongoose");
 var app       = express();
 var routes    = require('./routes')(app);
 

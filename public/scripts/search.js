@@ -14,6 +14,5 @@ angular.module('search.controllers', [])
     };
 
     $scope.searches = [];
-    $scope.searchModel = {term: ''};
-    $scope.newSearch = angular.copy($scope.searchModel);
+    $scope.newSearch = {term: ''};
   })
