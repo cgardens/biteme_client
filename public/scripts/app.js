@@ -41,3 +41,24 @@ angular.module('BiteMe', [ // 'app.factories',
 
     $urlRouterProvider.otherwise('/');
   })
+
+  .filter('formatTime', function() {
+    return function(sec) {
+      var mm = Math.floor(sec / 60);
+      var ss = sec - (mm * 60);
+
+      if (mm < 10) { mm = '0' + mm; }
+      if (ss < 10) { ss = '0' + ss; }
+
+      return mm + ':' + ss;
+    }
+  })
+
+  .filter('fraction', function() {
+    return function(input) {
+      firstSpace = input.indexOf(' ')
+      num = input.substr(0, firstSpace);
+      string = input.substr(firstSpace + 1);
+      return Ratio.parse(num).simplify().toLocaleString() + ' ' + string;
+    }
+  })

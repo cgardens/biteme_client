@@ -1,13 +1,28 @@
-<div>
+<img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+<h1 ng-bind='recipe.title'></h1>
+<h2 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h2>
+<h3>Rating: <span ng-bind='recipe.rating'></span></h3>
+<h3>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h3>
+<h4>Ingredients:</h4>
+<ul>
+  <li ng-repeat='ingredient in recipe.ingredients track by $index' ng-bind='ingredient | fraction'></li>
+</ul>
+<h4>Instructions:</h4>
+<ol>
+  <li ng-repeat='instruction in recipe.instructions track by $index' ng-bind='instruction'></li>
+<ol>
 
-  <div id='textToSpeech'>
-    <p ng-bind='caesarSpeech'></p>
-    <textarea id='text' ng-bind='caesarSpeech'></textarea>
-    <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
-    />
-  </div>
+<button ng-click='startCaesar()' ng-show='inProgress == false'>Start</button>
+<button ng-click='stopCaesar()' ng-show='inProgress == true'>Stop</button>
 
-  <div id='timer'>
-    <p ng-bind='seconds' ng-show='seconds > 0'></p>
-  </div>
+<p ng-bind='caesarSpeech'></p>
+
+<div id='countdown'>
+  <p ng-bind='seconds | formatTime' ng-show='seconds > 0'></p>
+</div>
+
+<div id='textToSpeech'>
+  <textarea id='text' ng-bind='caesarSpeech'></textarea>
+  <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+  />
 </div>
