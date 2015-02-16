@@ -1,14 +1,15 @@
 'user strict';
 
 var app = angular.module('BiteMe', [ // 'app.factories',
-                           'user.controllers'
+                           'ngStorage',
+                           'user.controllers',
                            'auth.controllers',
                            'recipe.controllers',
                            'search.controllers',
                            'user.controllers',
                            'ui.router' ])
 
-  .config(function($stateProvider, $urlRouterProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $stateProvider
 
@@ -36,6 +37,29 @@ var app = angular.module('BiteMe', [ // 'app.factories',
       controller: 'RecipeCtrl as r'
     })
 
+
+
+    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+      return {
+          'request': function (config) {
+              config.headers = config.headers || {};
+              if ($localStorage.token) {
+                  config.headers.Authorization = 'Bearer ' + $localStorage.token;
+              }
+              return config;
+          },
+          'responseError': function(response) {
+              if(response.status === 401 || response.status === 403) {
+                  $location.path('/signin');
+              }
+              return $q.reject(response);
+          }
+      };
+    }]);
+
+
+
+
     // .state('user', {
     //   url: '/users/:userId',
     //   templateUrl: 'partials/user_show.html',
@@ -43,4 +67,4 @@ var app = angular.module('BiteMe', [ // 'app.factories',
     // })
 
     $urlRouterProvider.otherwise('/');
-  })
+  }])

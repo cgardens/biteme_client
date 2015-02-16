@@ -1,6 +1,6 @@
 'use strict';
 
-var user = angular.module('user');
+var user = angular.module('user', []);
 
 user.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'AuthFactory', function($rootScope, $scope, $location, $localStorage, AuthFactory) {
 
@@ -18,22 +18,22 @@ user.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$localStorage
       })
   };
 
-  $scope.signup = function() {
-      var formData = {
-          email: $scope.email,
-          password: $scope.password
-      }
+  // $scope.signup = function() {
+  //     var formData = {
+  //         email: $scope.email,
+  //         password: $scope.password
+  //     }
 
-      AuthFactory.save(formData, function(res) {
-          $localStorage.token = res.data.token;
-          if (!$localStorage.token) {
-              throw "not ok";
-          }
-          $location.path('/me');
-      }, function() {
-          $rootScope.error = 'Failed to signup';
-      })
-  };
+  //     AuthFactory.save(formData, function(res) {
+  //         $localStorage.token = res.data.token;
+  //         if (!$localStorage.token) {
+  //             throw "not ok";
+  //         }
+  //         $location.path('/me');
+  //     }, function() {
+  //         $rootScope.error = 'Failed to signup';
+  //     })
+  // };
 
   $scope.logout = function() {
       AuthFactory.logout(function() {
