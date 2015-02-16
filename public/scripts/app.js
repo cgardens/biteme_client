@@ -1,4 +1,7 @@
-angular.module('BiteMe', [ // 'app.factories',
+'user strict';
+
+var app = angular.module('BiteMe', [ // 'app.factories',
+                           'user.controllers'
                            'auth.controllers',
                            'recipe.controllers',
                            'search.controllers',
