@@ -5,7 +5,7 @@
       <button ng-click='getSearchResults()'>Grab Recipes</button>
     </form>
 
-
+    <div ng-show='recipes'>{{recipes}}</div>
     <li ng-repeat='recipe in recipes.results'>
       <img ng-src='{{recipe.imageURL}}' alt='recipe photo'>
       <div class='recipe-info'>
