@@ -1,11 +1,12 @@
 angular.module('BiteMe', [ // 'app.factories',
                            'auth.controllers',
+                           'ngStorage',
                            'recipe.controllers',
                            'search.controllers',
                            'user.controllers',
                            'ui.router' ])
 
-  .config(function($stateProvider, $urlRouterProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $stateProvider
 
@@ -33,14 +34,32 @@ angular.module('BiteMe', [ // 'app.factories',
       controller: 'RecipeCtrl as r'
     })
 
-    // .state('user', {
-    //   url: '/users/:userId',
-    //   templateUrl: 'partials/user_show.html',
-    //   controller: 'UserCtrl as u'
-    // })
+    .state('user', {
+      url: '/user',
+      templateUrl: 'partials/user_show.html',
+      controller: 'UserCtrl as u'
+    })
+
+    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+      return {
+        'request': function(config) {
+          config.headers = config.headers || {};
+          if ($localStorage.token) {
+              config.headers.Authorization = 'Bearer ' + $localStorage.token;
+          }
+          return config;
+        },
+        'responseError': function(response) {
+          if(response.status === 401 || response.status === 403) {
+              $location.path('/signin');
+          }
+          return $q.reject(response);
+        }
+      }
+    }]);
 
     $urlRouterProvider.otherwise('/');
-  })
+  }])
 
   .filter('formatTime', function() {
     return function(sec) {

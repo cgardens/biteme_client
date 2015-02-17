@@ -1,13 +1,13 @@
-<form ng-show='newSearch'>
+<form>
   <input ng-model='newSearch.term' type='text' placeholder='Search recipes'>
-  <button ng-click='getSearchResults()'>Grab Recipes</button>
+  <button ng-click='getSearchResults()'>Grab Recipe</button>
 </form>
 <ul>
   <li ng-repeat='recipe in recipes.results'>
     <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
     <div class='recipe-info'>
       <a ng-href='#/recipes/{{recipe.recipeID}}'><h2 ng-bind='recipe.title'></h2></a>
-      <h3 ng-bind='recipe.rating'></h3>
+      <h3 ng-bind='recipe.rating | number : 1'></h3>
     </div>
   </li>
 </ul>
