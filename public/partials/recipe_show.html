@@ -4,7 +4,7 @@
 <h3>Rating: <span ng-bind='recipe.rating | number: 1'></span></h3>
 <h3>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h3>
 
-<button ng-click='saveRecipe()' ng-show='$localStorage.userID' ng-show='saved == false'>Save this recipe</button>
+<button ng-click='saveRecipe()' ng-show='saved == false'>Save this recipe</button>
 <p ng-show='saved == true'>You've saved this recipe.</p>
 
 <h4>Ingredients:</h4>

@@ -19,7 +19,7 @@ angular.module('recipe.controllers', [])
       var instructions = $scope.recipe.instructions;
       for (i = 0; i < instructions.length; i++) {
         var instruction = instructions[i].toLowerCase().trim();
-        if (instructions[i].length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); };
+        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); };
       }
       return formattedInstructions;
     };
@@ -241,5 +241,6 @@ angular.module('recipe.controllers', [])
         }
       };
       annyang.addCommands(commands);
+      annyang.debug();
     };
   })

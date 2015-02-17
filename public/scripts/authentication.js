@@ -1,6 +1,7 @@
 angular.module('auth.controllers', ['ngStorage'])
 
-  .controller('AuthCtrl', ['$scope', '$http','$localStorage', function($scope, $http, $localStorage) {
+  .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', function($scope, $http, $localStorage, $location) {
+    if ($localStorage.userID) { $location.path('/search_results'); };
 
     $scope.signUp = function() {
       $http.post('http://localhost:3000/users/signup/', {
@@ -9,9 +10,13 @@ angular.module('auth.controllers', ['ngStorage'])
         password: $scope.signup_password
       })
       .success(function(res, body) {
-        $localStorage.token = res.token;
-        $localStorage.userID = res.data._id;
-        if (res.type === false) { $scope.error = res.data; }
+        if (res.type === false) {
+          $scope.error = res.data;
+        } else {
+          $localStorage.token = res.token;
+          $localStorage.userID = res.data._id;
+          $location.path('/search_results')
+        }
       })
     };
 
@@ -21,9 +26,13 @@ angular.module('auth.controllers', ['ngStorage'])
         password: $scope.login_password
       })
       .success(function(res, body) {
-        $localStorage.token = res.token;
-        $localStorage.userID = res.data._id;
-        if (res.type === false) { $scope.error = res.data; }
+        if (res.type === false) {
+          $scope.error = res.data;
+        } else {
+          $localStorage.token = res.token;
+          $localStorage.userID = res.data._id;
+          $location.path('/search_results')
+        }
       })
     };
 
