@@ -1,10 +1,62 @@
 angular.module('recipe.controllers', [])
 
-  .controller('RecipeCtrl', function($scope, $http, $stateParams) {
+  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage) {
+    // formatting functions
+    $scope.formatIngredients = function() {
+      var formattedIngredients = [];
+      var ingredients = $scope.recipe.ingredientsVerbose;
+      for (i = 0; i < ingredients.length; i++) {
+        var quantity = Ratio.parse(ingredients[i].Quantity).simplify().toLocaleString().trim();
+        var unitType = ingredients[i].Unit || '';
+        var name = ingredients[i].Name.toLowerCase().trim();
+        formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name);
+      }
+      return formattedIngredients;
+    };
+
+    $scope.formatInstructions = function() {
+      var formattedInstructions = [];
+      var instructions = $scope.recipe.instructions;
+      for (i = 0; i < instructions.length; i++) {
+        var instruction = instructions[i].toLowerCase().trim();
+        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); };
+      }
+      return formattedInstructions;
+    };
+
     // get request
     $http.get('http://localhost:3000/recipes/' + $stateParams.recipeId)
-    .success(function(data) { $scope.recipe = data; })
+      .success(function(data) {
+        $scope.recipe = data;
+        $scope.ingredients = $scope.formatIngredients();
+        $scope.instructions = $scope.formatInstructions();
+        $scope.saved = false;
+      })
     .error(function(data) { console.log('Error: ' + data); })
+
+    // save recipe
+    $scope.saveRecipe = function() {
+      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeId })
+        .success(function(data) { $scope.saved = true; })
+    }
+
+    // voice start/stop functions
+    $scope.inProgress = false;
+
+    $scope.startCaesar = function() {
+      $scope.inProgress = true;
+      $scope.activateCaesar('Caesar here, at your service.');
+      $timeout( function(){ $scope.activateCaesar("Let's begin."); }, 2600);
+      $timeout( function(){ $scope.activateCaesar('Your first step is:'); }, 4000);
+      $timeout( function(){ $scope.activateCaesar($scope.findStep()); }, 5600);
+      annyang.start();
+    };
+
+    $scope.stopCaesar = function() {
+      $scope.inProgress = false;
+      $scope.activateCaesar('');
+      annyang.stop();
+    };
 
     // recipe queries
     $scope.currentStep = 0;
@@ -14,20 +66,21 @@ angular.module('recipe.controllers', [])
     };
 
     $scope.findStep = function() {
-      return $scope.recipe.instructions[$scope.currentStep]
+      return $scope.instructions[$scope.currentStep]
     };
 
     $scope.findIngredient = function(inputIngredient) {
-      var ingredients = $scope.recipe.ingredients;
+      var ingredients = $scope.ingredients;
       for (var key in ingredients) {
         if (ingredients[key].toLowerCase().indexOf(inputIngredient.toLowerCase()) >= 0) {
           return ingredients[key];
           break;
         }
       }
+      $scope.activateCaesar("I'm sorry. I do not see " + inputIngredient + ' in this recipe.');
     };
 
-    // caesar functions
+    // caesar response functions
     $scope.caesarSpeech = '';
 
     $scope.activateCaesar = function(str) {
@@ -44,68 +97,81 @@ angular.module('recipe.controllers', [])
       $('#textToSpeech input').trigger('click');
     }; // put into angular speak
 
-    $scope.startCaesar = function() {
-      $scope.activateCaesar("caesar here, at your service. let's begin. your first step is: " + $scope.findStep());
-    };
-
     // set timer
+    $scope.setTimer = function(time) {
+      $scope.seconds = time * 60;
 
+      function runTimer() {
+        if ($scope.seconds === 0) {
+          $interval.cancel(startTimer)
+        } else {
+          $scope.seconds--
+        };
+      }
 
-    $scope.setTimer = function(seconds) {
-      $scope.seconds = seconds * 60;
-      var countdown = setInterval('setTimer()', 1000);
-      if ($scope.seconds === 0) { clearInterval(countdown); }
-      else { seconds--; }
-    }
-
-    // $scope.resetTime(seconds) {
-    //   var minutes = Math.round((seconds - 30)/60);
-    //   var remainingSeconds = seconds % 60;
-    //   if (remainingSeconds < 10) {
-    //       remainingSeconds = "0" + remainingSeconds;
-    //   }
-    //   document.getElementById('countdown').innerHTML = minutes + ":" + remainingSeconds;
-    //   if (seconds == 0) {
-    //       $interval.cancel($scope.countdown);
-    //       document.getElementById('countdown').innerHTML = "Buzz Buzz";
-    //   } else {
-    //       seconds--;
-    //   }
-    // }
-
-    // $scope.countdown = function() {
-    //   if ($scope.seconds === 0) {
-    //     clearInterval(countdown);
-    //   }
-    // }
-
-    // $scope.countdown = $interval('resetTime()', 1000)
+      startTimer = $interval(runTimer, 1000);
+    };
 
     // caesar commands
     if (annyang) {
       var commands = {
         // basic commands
         'hey caesar': function() {
-          $scope.activateCaesar('caesar here, at your service');
+          $scope.activateCaesar('Caesar here, at your service.');
           // possible need to restart annyang here
         },
         'caesar': function() {
-          $scope.activateCaesar('caesar here, at your service');
+          $scope.activateCaesar('Caesar here, at your service.');
         },
         'thank you caesar': function() {
-          $scope.activateCaesar("you're quite welcome");
+          $scope.activateCaesar("You're quite welcome.");
         },
         'thank you': function() {
-          $scope.activateCaesar("you're quite welcome");
+          $scope.activateCaesar("You're quite welcome.");
         },
         'thanks caesar': function() {
-          $scope.activateCaesar("you're quite welcome");
+          $scope.activateCaesar("You're quite welcome.");
         },
         'thanks': function() {
-          $scope.activateCaesar("you're quite welcome");
+          $scope.activateCaesar("You're quite welcome.");
+        },
+
+        // session commands
+        'goodbye caesar': function() {
+          $scope.activateCaesar('Ta ta for now.');
+          $timeout( function(){ $scope.stopCaesar(); }, 2500);
+        },
+        'goodbye': function() {
+          $scope.activateCaesar('Ta ta for now.');
+          $timeout( function(){ $scope.stopCaesar(); }, 2500);
+        },
+        'caesar help': function() {
+          $scope.activateCaesar('How can I be of assistance?')
+          $timeout( function(){ $scope.activateCaesar('You can say things like:'); }, 2300);
+          $timeout( function(){ $scope.activateCaesar("'Next step',"); }, 4100);
+          $timeout( function(){ $scope.activateCaesar("'Repeat step',"); }, 5100);
+          $timeout( function(){ $scope.activateCaesar("'How much cardamom?',"); }, 6100);
+          $timeout( function(){ $scope.activateCaesar("Or, 'Set a timer for twenty minutes.'"); }, 7600);
+        },
+        'help caesar': function() {
+          $scope.activateCaesar('How can I be of assistance?')
+          $timeout( function(){ $scope.activateCaesar('You can say things like:'); }, 2300);
+          $timeout( function(){ $scope.activateCaesar("'Next step',"); }, 4100);
+          $timeout( function(){ $scope.activateCaesar("'Repeat step',"); }, 5100);
+          $timeout( function(){ $scope.activateCaesar("'How much cardamom?',"); }, 6100);
+          $timeout( function(){ $scope.activateCaesar("Or, 'Set a timer for twenty minutes.'"); }, 7600);
+        },
+        'help': function() {
+          $scope.activateCaesar('How can I be of assistance?')
+          $timeout( function(){ $scope.activateCaesar('You can say things like:'); }, 2300);
+          $timeout( function(){ $scope.activateCaesar("'Next step',"); }, 4100);
+          $timeout( function(){ $scope.activateCaesar("'Repeat step',"); }, 5100);
+          $timeout( function(){ $scope.activateCaesar("'How much cardamom?',"); }, 6100);
+          $timeout( function(){ $scope.activateCaesar("Or, 'Set a timer for twenty minutes.'"); }, 7600);
         },
 
         // step commands
+        // add previous step function
         'caesar next step': function() {
           $scope.incrementStep();
           $scope.activateCaesar($scope.findStep());
@@ -118,6 +184,18 @@ angular.module('recipe.controllers', [])
           $scope.activateCaesar($scope.findStep());
         },
         'repeat step': function() {
+          $scope.activateCaesar($scope.findStep());
+        },
+        'caesar repeat': function() {
+          $scope.activateCaesar($scope.findStep());
+        },
+        'repeat': function() {
+          $scope.activateCaesar($scope.findStep());
+        },
+        'caesar repeat last step': function() {
+          $scope.activateCaesar($scope.findStep());
+        },
+        'repeat last step': function() {
           $scope.activateCaesar($scope.findStep());
         },
 
@@ -147,20 +225,22 @@ angular.module('recipe.controllers', [])
         // timer ingredients
         'caesar set timer for *time minutes': function(minutes) {
           $scope.setTimer(minutes);
-          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes');
+          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes.');
         },
         'set timer for *time minutes': function(minutes) {
-          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes');
+          $scope.setTimer(minutes);
+          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes.');
         },
         'caesar set a timer for *time minutes': function(minutes) {
-          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes');
+          $scope.setTimer(minutes);
+          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes.');
         },
         'set a timer for *time minutes': function(minutes) {
-          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes');
+          $scope.setTimer(minutes);
+          $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes.');
         }
       };
-
       annyang.addCommands(commands);
-      annyang.start();
+      annyang.debug();
     };
   })

@@ -1,9 +1,9 @@
-
 //initialize app
 var express   = require('express');
 var path      = require('path');
 var morgan    = require("morgan");
 var app       = express();
+var Fraction  = require('fractional-arithmetic').Fraction;
 
 // all environments
 var port = process.env.PORT || 9000;

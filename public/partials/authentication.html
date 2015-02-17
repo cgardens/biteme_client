@@ -1,1 +1,16 @@
-<p>Authentication page</p>
+<p ng-bind='error' style='color: red'></p>
+
+<form>
+  <input ng-model='signup_first_name' type='text' placeholder='Caesar'>
+  <input ng-model='signup_email' type='email' placeholder='caesar@gmail.com'>
+  <input ng-model='signup_password' type='password' placeholder='********'>
+  <button ng-click='signUp()'>Sign Up</button>
+</form>
+
+<form>
+  <input ng-model='login_email' type='email' placeholder='caesar@gmail.com'>
+  <input ng-model='login_password' type='password' placeholder='********'>
+  <button ng-click='login()'>Login</button>
+</form>
+
+<button ng-click='logout()'>Logout</button>
