@@ -4,7 +4,7 @@
 <h3>Rating: <span ng-bind='recipe.rating | number: 1'></span></h3>
 <h3>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h3>
 
-<button ng-click='saveRecipe()' ng-show='$localStorage.userID' ng-show='saved == false'>Save this recipe</button>
+<button ng-click='saveRecipe()' ng-show='saved == false'>Save this recipe</button>
 <p ng-show='saved == true'>You've saved this recipe.</p>
 
 <h4>Ingredients:</h4>
@@ -29,4 +29,36 @@
   <textarea id='text' ng-bind='caesarSpeech'></textarea>
   <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
   />
+</div>
+
+<div>
+  <div ng-show='newCustomRecipe'>{{newCustomRecipe.ingredientsVerbose}}</div>
+  <form>
+    Title<input ng-model='newCustomRecipe.title'></input><br>
+    Description<input ng-model='newCustomRecipe.description'></input><br>
+    Cuisine<input ng-model='newCustomRecipe.cuisine'></input><br>
+
+    Ingredients
+    <div data-ng-repeat="ingredient in newCustomRecipe.ingredientsVerbose">
+      <label for="ingredient" ng-show="showChoiceLabel(ingredient)">Ingredients</label>
+      <input type="text" ng-model="ingredient.Name" name="" placeholder="Enter a ingredient name">
+      <input type="text" ng-model="ingredient.Quantity" name="" placeholder="Enter a quantity">
+      <input type="text" ng-model="ingredient.Unit" name="" placeholder="Enter a unit">
+      <input type="text" ng-model="ingredient.PreparationNotes" name="" placeholder="Enter a preparation nodes">
+      <button ng-show="showAddIngredient(ingredient)" ng-click="addNewIngredient()">Add another ingredient</button>
+    </div>
+
+    Instructions
+    <div data-ng-repeat="instruction in newCustomRecipe.instructions">
+      <label for="instruction" ng-show="showChoiceLabel(instruction)">Instructions</label>
+      <input type="text" ng-model='instruction.content' name="" placeholder="Enter an instruction"></input>
+      <button ng-show="showAddInstruction(instruction)" ng-click="addNewInstruction()">Add another instruction</button>
+    </div>
+
+
+    Enter Image URL<input ng-model='newCustomRecipe.imageURL'></input><br>
+    Number of Servings<input ng-model='newCustomRecipe.servings.yieldNumber'></input><br>
+    Servings Unit<input ng-model='newCustomRecipe.servings.yieldUnit'></input><br>
+  </form>
+  <button ng-click='saveRecipeCustom(newCustomRecipe)'>save recipe</button>
 </div>
