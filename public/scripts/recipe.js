@@ -24,7 +24,7 @@ angular.module('recipe.controllers', [])
                             Unit: "",
                             PreparationNotes: ""}], //objects
       instructions: [{'id': "1",
-                    Content: "" }], //strings
+                    content: "" }], //strings
       imageURL: "",
       servings: {
         yieldNumber: "",
@@ -55,7 +55,7 @@ angular.module('recipe.controllers', [])
     $scope.addNewInstruction = function() {
       var newItemNo = $scope.newCustomRecipe.instructions.length+1;
       $scope.newCustomRecipe.instructions.push({'id': newItemNo,
-                            Content: "" });
+                            content: "" });
     };
 
     $scope.showAddInstruction = function(instruction) {
@@ -94,6 +94,13 @@ angular.module('recipe.controllers', [])
     }
 
     $scope.saveRecipeCustom = function(recipe) {
+      var formattedInstructions = []
+      recipe.instructions.forEach(function(instructionObject){
+        formattedInstructions.push(instructionObject.content)
+      })
+
+      recipe.instructions = formattedInstructions
+
       $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes/custom', { recipeToAdd: recipe })
         .success(function(data) { $scope.saved = true; })
     }

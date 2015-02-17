@@ -48,6 +48,7 @@
       <button ng-show="showAddIngredient(ingredient)" ng-click="addNewIngredient()">Add another ingredient</button>
     </div>
 
+    <div ng-show='newCustomRecipe'>{{newCustomRecipe.instructions}}</div>
     Instructions
     <div data-ng-repeat="instruction in newCustomRecipe.instructions">
       <label for="instruction" ng-show="showChoiceLabel(instruction)">Instructions</label>
