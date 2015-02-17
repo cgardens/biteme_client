@@ -63,10 +63,6 @@ angular.module('recipe.controllers', [])
       return instruction.id === $scope.newCustomRecipe.instructions[$scope.newCustomRecipe.instructions.length-1].id;
     };
 
-    // $scope.showChoiceLabel = function (choice) {
-    //   return choice.id === $scope.choices[0].id;
-    // }
-
     $scope.formatInstructions = function() {
       var formattedInstructions = [];
       var instructions = $scope.recipe.instructions;

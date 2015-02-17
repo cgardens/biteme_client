@@ -40,7 +40,6 @@
 
     Ingredients
     <div data-ng-repeat="ingredient in newCustomRecipe.ingredientsVerbose">
-      <label for="ingredient" ng-show="showChoiceLabel(ingredient)">Ingredients</label>
       <input type="text" ng-model="ingredient.Name" name="" placeholder="Enter a ingredient name">
       <input type="text" ng-model="ingredient.Quantity" name="" placeholder="Enter a quantity">
       <input type="text" ng-model="ingredient.Unit" name="" placeholder="Enter a unit">
@@ -51,7 +50,6 @@
     <div ng-show='newCustomRecipe'>{{newCustomRecipe.instructions}}</div>
     Instructions
     <div data-ng-repeat="instruction in newCustomRecipe.instructions">
-      <label for="instruction" ng-show="showChoiceLabel(instruction)">Instructions</label>
       <input type="text" ng-model='instruction.content' name="" placeholder="Enter an instruction"></input>
       <button ng-show="showAddInstruction(instruction)" ng-click="addNewInstruction()">Add another instruction</button>
     </div>
