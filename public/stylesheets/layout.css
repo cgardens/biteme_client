@@ -15,8 +15,21 @@
 }
 
 .recipe-item {
+  /*outline: 1px solid red;*/
   display: inline-block;
   height: 300px;
+  min-width: 300px;
+  min-height: 425px;
   overflow: hidden;
 }
 
+.recipe-info {
+  text-align: center;
+}
+
+.speech-bar {
+  height: 125px;
+  background-color: #363636;
+  padding: 0;
+  margin: 0;
+}

@@ -5,15 +5,15 @@
 
 #grab-btn {
   width: 100%;
-  margin-bottom: 40px;
+  margin: 20px 0 40px 0;
   color: white;
 }
 
-#grab-btn:hover {
+.btn-orange:hover {
   color: white;
   opacity: .8;
 }
 
-#grab-btn:visited {
+.btn-orange:visited {
   color: white;
 }

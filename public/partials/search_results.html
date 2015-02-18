@@ -1,24 +1,25 @@
-<form>
-  <div class="form-group col-md-4 col-md-offset-4">
-    <div class="search-window">
+<div class="form-group col-md-4 col-md-offset-4">
+  <div class="search-window">
+    <form>
       <input class="form-control" ng-model='newSearch.term' type='text' placeholder='Search recipes...'>
       <button id="grab-btn"class="btn btn-orange" ng-click='getSearchResults()'>Grab Recipe</button>
-    </div>
+    </form>
   </div>
-</form>
+</div>
 
 <div class="container-fluid">
   <div class="recipe-container">
       <div class='row'>
-      <div class="col-md-4 recipe-item" ng-repeat='recipe in recipes.results'>
-        <div class="img-container">
-          <img class="img-crop" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+        <div class="col-md-4 recipe-item" ng-repeat='recipe in recipes.results'>
+          <div class="img-container">
+            <img class="img-crop" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+          </div>
+          <div class='recipe-info'>
+            <a ng-href='#/recipes/{{recipe.recipeID}}'><h2 class="recipe-title" ng-bind='recipe.title'></h2></a>
+            <h3 ng-bind='recipe.rating | number : 1'>Rating: </h3>
+          </div>
         </div>
-        <div class='recipe-info'>
-          <a ng-href='#/recipes/{{recipe.recipeID}}'><h2 class="recipe-title" ng-bind='recipe.title'></h2></a>
-          <h3 ng-bind='recipe.rating | number : 1'>Rating: </h3>
-        </div>
-      </div>
+      <div>
     </div>
   </div>
 </div>
