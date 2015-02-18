@@ -1,0 +1,24 @@
+.raleway {
+  font-family: 'Raleway', sans-serif;
+}
+
+.recipe-title {
+  color: gray;
+  font-size: 22px;
+  text-align: center;
+}
+
+.recipe-title:hover {
+  color: #e16120;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.title {
+  font-family: 'Satisfy', cursive;
+  font-size: 46px;
+  color: #e16120;
+  text-align: center;
+}

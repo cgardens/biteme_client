@@ -1,0 +1,19 @@
+.btn-orange {
+  background-color: #e16120;
+  color: white;
+}
+
+#grab-btn {
+  width: 100%;
+  margin-bottom: 40px;
+  color: white;
+}
+
+#grab-btn:hover {
+  color: white;
+  opacity: .8;
+}
+
+#grab-btn:visited {
+  color: white;
+}

@@ -1,0 +1,22 @@
+.header {
+  list-style-type: none;
+  background-color: #eeede6;
+  height: 66px;
+}
+
+.search-window {
+  margin-top: 50px;
+  display: block;
+}
+
+.recipe-container {
+  width: 80%;
+  margin-left: 10%;
+}
+
+.recipe-item {
+  display: inline-block;
+  height: 300px;
+  overflow: hidden;
+}
+

@@ -36,7 +36,7 @@ angular.module('recipe.controllers', [])
 
     // save recipe
     $scope.saveRecipe = function() {
-      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeId })
+      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
         .success(function(data) { $scope.saved = true; })
     }
 
