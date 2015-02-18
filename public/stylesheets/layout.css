@@ -28,8 +28,10 @@
 }
 
 .speech-bar {
-  height: 125px;
+  min-height: 125px;
   background-color: #363636;
+  border-radius: 7px;
   padding: 0;
-  margin: 0;
+  margin: 45px 5.5%;
+  /*opacity: .8;*/
 }

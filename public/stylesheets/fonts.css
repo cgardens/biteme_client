@@ -28,10 +28,13 @@ a:hover {
   color: white;
   font-size: 40px;
   text-align: center;
+  /*display: inline-block;*/
+  /*margin: 0 auto;*/
+  padding-bottom: 20px;
 }
 
 #countdown {
   color: red;
-  font-size: 20px;
+  font-size: 40px;
   float: right;
 }
