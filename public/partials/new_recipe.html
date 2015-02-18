@@ -1,0 +1,30 @@
+<div>
+  <div ng-show='newCustomRecipe'>{{newCustomRecipe.ingredientsVerbose}}</div>
+  <form>
+    Title<input ng-model='newCustomRecipe.title'></input><br>
+    Description<input ng-model='newCustomRecipe.description'></input><br>
+    Cuisine<input ng-model='newCustomRecipe.cuisine'></input><br>
+
+    Ingredients
+    <div data-ng-repeat="ingredient in newCustomRecipe.ingredientsVerbose">
+      <input type="text" ng-model="ingredient.Name" name="" placeholder="Enter a ingredient name">
+      <input type="text" ng-model="ingredient.Quantity" name="" placeholder="Enter a quantity">
+      <input type="text" ng-model="ingredient.Unit" name="" placeholder="Enter a unit">
+      <input type="text" ng-model="ingredient.PreparationNotes" name="" placeholder="Enter a preparation note">
+      <button ng-show="showAddIngredient(ingredient)" ng-click="addNewIngredient()">Add another ingredient</button>
+    </div>
+
+    <div ng-show='newCustomRecipe'>{{newCustomRecipe.instructions}}</div>
+    Instructions
+    <div data-ng-repeat="instruction in newCustomRecipe.instructions">
+      <input type="text" ng-model='instruction.content' name="" placeholder="Enter an instruction"></input>
+      <button ng-show="showAddInstruction(instruction)" ng-click="addNewInstruction()">Add another instruction</button>
+    </div>
+
+
+    Enter Image URL<input ng-model='newCustomRecipe.imageURL'></input><br>
+    Number of Servings<input ng-model='newCustomRecipe.servings.yieldNumber'></input><br>
+    Servings Unit<input ng-model='newCustomRecipe.servings.yieldUnit'></input><br>
+  </form>
+  <button ng-click='saveRecipeCustom(newCustomRecipe)'>save recipe</button>
+</div>
