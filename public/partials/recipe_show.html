@@ -34,10 +34,10 @@
     <div class="form-group col-md-4">
       <div class="img-container">
         <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+        <h4 class="text-center">Rating: <span ng-bind='recipe.rating | number: 1'></span> | Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
+        <button id="save-btn" class="btn btn-orange" ng-click='saveRecipe()' ng-show='saved == false'>Save recipe</button>
+        <h4 class="bg-success text-center" ng-show='saved == true'>Recipe Saved!</h4>
       </div>
-      <h4>Rating: <span ng-bind='recipe.rating | number: 1'></span> | Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
-      <button class="btn btn-orange" ng-click='saveRecipe()' ng-show='saved == false'>Save recipe</button>
-      <p ng-show='saved == true'>Recipe Saved!</p>
     </div>
 
     <div class="col-md-4">
@@ -54,4 +54,4 @@
       </ul>
     </div>
   </div>
-</div>
+<!-- </div> -->

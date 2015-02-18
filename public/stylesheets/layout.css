@@ -4,6 +4,12 @@
   height: 66px;
 }
 
+.footer {
+  background-color: #eeede6;
+  height: 200px;
+  bottom: 0;
+}
+
 .search-window {
   margin-top: 50px;
   display: block;
