@@ -19,5 +19,12 @@
 }
 
 #save-btn {
-  margin-bottom: 20px;
+  /*position: absolute;*/
+  margin: 0 auto;
+}
+
+#start-btn {
+  width: 100%;
+  margin: 30px 0;
+
 }
