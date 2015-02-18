@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <div class="recipe-info">
-        <h2 ng-bind='recipe.title'></h2>
-        <h3 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h3>
+        <h3 ng-bind='recipe.title'></h3>
+        <h4 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h4>
       </div>
     </div>
   </div>
@@ -35,12 +35,12 @@
 
   <div class="row">
     <div class="form-group col-md-4">
-      <div class="img-container">
+      <div class="show-container">
         <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
         <h4 class="text-center">Rating: <span ng-bind='recipe.rating | number: 1'></span> | Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
-        <button id="save-btn" class="btn btn-orange" ng-click='saveRecipe()' ng-show='saved == false'>Save recipe</button>
         <h4 class="bg-success text-center" ng-show='saved == true'>Recipe Saved!</h4>
       </div>
+      <div id="save-btn"><button class="btn btn-orange" ng-click='saveRecipe()' ng-show='saved == false'>Save recipe</button></div>
     </div>
 
     <div class="col-md-4">
@@ -57,4 +57,3 @@
       </ul>
     </div>
   </div>
-<!-- </div> -->

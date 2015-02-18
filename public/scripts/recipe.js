@@ -80,7 +80,7 @@ angular.module('recipe.controllers', [])
           return ingredients[key];
         }
       }
-      $scope.activateCaesar("I'm sorry. I do not see " + inputIngredient + ' in this recipe.');
+      return "I'm sorry. I do not see " + inputIngredient + ' in this recipe.';
     };
 
     // caesar response functions
@@ -106,8 +106,8 @@ angular.module('recipe.controllers', [])
 
       function runTimer() {
         if ($scope.seconds === 0) {
-          $interval.cancel(startTimer);
           $scope.activateCaesar("Your timer has expired.");
+          $interval.cancel(startTimer);
         } else {
           $scope.seconds--;
         }

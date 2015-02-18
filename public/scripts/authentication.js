@@ -15,9 +15,9 @@ angular.module('auth.controllers', ['ngStorage'])
         } else {
           $localStorage.token = res.token;
           $localStorage.userID = res.data._id;
-          $location.path('/search_results')
+          $location.path('/search_results');
         }
-      })
+      });
     };
 
     $scope.login = function() {
@@ -31,13 +31,23 @@ angular.module('auth.controllers', ['ngStorage'])
         } else {
           $localStorage.token = res.token;
           $localStorage.userID = res.data._id;
-          $location.path('/search_results')
+          $location.path('/search_results');
         }
-      })
+      });
     };
 
     $scope.logout = function() {
       delete $localStorage.userID;
       delete $localStorage.token;
-    }
+    };
+
+    $scope.isLoggedIn = function() {
+      if ($localStorage.userID) {
+        console.log("user is logged in");
+        return true;
+      } else {
+        console.log("user is logged out");
+        return false;
+      }
+    };
   }]);

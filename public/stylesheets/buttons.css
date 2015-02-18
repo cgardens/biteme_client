@@ -19,12 +19,18 @@
 }
 
 #save-btn {
-  /*position: absolute;*/
-  margin: 0 auto;
+  /*margin: 0 auto;*/
+  width: 100%;
+  margin-left: 38%;
 }
 
 #start-btn {
   width: 100%;
   margin: 30px 0;
+}
 
+.logout-btn {
+  position: absolute;
+  margin:  20px 10px;
+  /*float:right;*/
 }

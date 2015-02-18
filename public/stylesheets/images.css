@@ -1,7 +1,7 @@
 /** {
   outline: 1px solid black;
-}
-*/
+}*/
+
 
 .img-container {
   height: 300px;
@@ -16,4 +16,11 @@
   margin-top: 20px;
   width: 100%;
   display: inline-block;
+}
+
+.show-container {
+  width: 300px;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 7px;
 }
