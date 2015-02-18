@@ -1,6 +1,6 @@
 angular.module('recipe.controllers', [])
 
-  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage) {
+  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage, $location) {
     // formatting functions
     $scope.formatIngredients = function() {
       var formattedIngredients = [];
@@ -25,7 +25,12 @@ angular.module('recipe.controllers', [])
     };
 
     // get request
-    $http.get('http://localhost:3000/recipes/' + $stateParams.recipeId)
+    if ($location.search().custom === 'true') {
+      uri = 'http://localhost:3000/users/' + $localStorage.userID + '/customrecipe/' + $stateParams.recipeId;
+    } else {
+      uri = 'http://localhost:3000/recipes/' + $stateParams.recipeId;
+    };
+    $http.get(uri)
       .success(function(data) {
         $scope.recipe = data;
         $scope.ingredients = $scope.formatIngredients();

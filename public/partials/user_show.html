@@ -1,13 +1,22 @@
 <div class="container-fluid">
   <div class="col-md-4 col-md-offset-4 text-center">
   <h2>Hello, <span ng-bind='user.firstName'></span>!</h2>
-  <h3>Here are your recipes:</h3>
+  <h3>Here are your saved recipes:</h3>
   </div>
   <ul>
     <li ng-repeat='recipe in recipes'>
       <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
-      <h3 ng-bind='recipe.title'></h3>
+      <a ng-href='#/recipes/{{recipe.recipeID}}'><h3 ng-bind='recipe.title'></h3></a>
       <h4>Rating: <span ng-bind='recipe.rating'></span></h4>
+    </li>
+  </ul>
+  <div class="col-md-4 col-md-offset-4 text-center">
+  <h3>Here are your custom recipes:</h3>
+  </div>
+  <ul>
+    <li ng-repeat='recipe in customRecipes'>
+      <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+      <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'><h3 ng-bind='recipe.title'></h3></a>
     </li>
   </ul>
 </div>
