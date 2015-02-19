@@ -2,14 +2,20 @@ angular.module('recipe.controllers', [])
 
   .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage, $location) {
     // formatting functions
-    $scope.formatIngredients = function() {
+    $scope.formatIngredients = function(multiplier) {
       var formattedIngredients = [];
+      var multiplier = multiplier || $scope.recipe.servings.yieldNumber;
       var ingredients = $scope.recipe.ingredientsVerbose;
       for (i = 0; i < ingredients.length; i++) {
-        var quantity = Ratio.parse(ingredients[i].Quantity).simplify().toLocaleString().trim();
+        var quantity = Ratio.parse(ingredients[i].Quantity / multiplier * $scope.recipe.servings.yieldNumber).simplify().toLocaleString().trim();
         var unitType = ingredients[i].Unit || '';
         var name = ingredients[i].Name.toLowerCase().trim();
-        formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name);
+        var prep = ingredients[i].PreparationNotes || '';
+        if (prep === '') {
+          formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name);
+        } else {
+          formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name + ' (' + prep.toLowerCase().trim() + ')');
+        }
       }
       return formattedIngredients;
     };
@@ -35,6 +41,7 @@ angular.module('recipe.controllers', [])
         $scope.recipe = data;
         $scope.ingredients = $scope.formatIngredients();
         $scope.instructions = $scope.formatInstructions();
+        $scope.numServings = data.servings.yieldNumber;
         $scope.saved = false;
       })
     .error(function(data) { console.log('Error: ' + data); });
@@ -43,6 +50,11 @@ angular.module('recipe.controllers', [])
     $scope.saveRecipe = function() {
       $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
         .success(function(data) { $scope.saved = true; });
+    };
+
+    // update servings
+    $scope.updateServings = function() {
+      $scope.ingredients = $scope.formatIngredients($scope.numServings);
     };
 
     // voice start/stop functions

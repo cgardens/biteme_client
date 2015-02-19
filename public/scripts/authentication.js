@@ -1,7 +1,7 @@
 angular.module('auth.controllers', ['ngStorage'])
 
   .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', function($scope, $http, $localStorage, $location) {
-    // if ($localStorage.userID) { $location.path('/search_results'); };
+    if ($localStorage.userID) { $location.path('/search_results'); };
 
     $scope.signUp = function() {
       $http.post('http://localhost:3000/users/signup/', {

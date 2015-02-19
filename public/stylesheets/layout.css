@@ -34,10 +34,19 @@
 }
 
 .speech-bar {
-  min-height: 125px;
-  background-color: #363636;
+  position: fixed;
+  min-height: 200px;
+  background-color: #3c9892;
+  border-radius: 7px 0;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  z-index: 999;
+}
+
+#serving-size {
+  display: inline-block;
+  width: 25px;
   border-radius: 7px;
-  padding: 0;
-  margin: 45px 5.5%;
-  /*opacity: .8;*/
+
 }

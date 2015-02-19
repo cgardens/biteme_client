@@ -3,6 +3,11 @@
   color: white;
 }
 
+.btn-teal {
+  background-color: #3c9892;
+  color: white;
+}
+
 #grab-btn {
   width: 100%;
   margin: 20px 0 40px 0;
@@ -33,4 +38,9 @@
   position: absolute;
   margin:  20px 10px;
   /*float:right;*/
+}
+
+.login-btn {
+  margin-top: 5px;
+  width: 100%;
 }

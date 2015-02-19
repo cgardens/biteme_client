@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="col-md-4 col-md-offset-4">
-    <div class="form-group">
+   <!--  <div class="form-group">
       <form>
         <input class="form-control" ng-model='signup_first_name' type='text' placeholder='Caesar'>
         <input class="form-control" ng-model='signup_email' type='email' placeholder='caesar@gmail.com'>
@@ -17,8 +17,14 @@
       <form>
         <input class="form-control" ng-model='login_email' type='email' placeholder='caesar@gmail.com'>
         <input class="form-control" ng-model='login_password' type='password' placeholder='********'>
-        <button class="btn btn-orange"ng-click='login()'>Login</button>
       </form>
-    </div>
+    </div> -->
+    <br><br><br>
+    <h3 class="text-center">Welocme! In order to save recipes please...</h3>
+    <button class="btn btn-primary btn-lg login-btn" ng-click='login()'>Login with Facebook</button>
+    <br><br><br>
+    <h3 class="text-center">Or, you can...<h3>
+    <button class="btn btn-orange btn-lg login-btn" ng-click='skipLogin()'>Get straight to cooking!</button>
+    <!-- <h3 class="text-center">And </h3> -->
   </div>
 </div>

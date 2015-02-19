@@ -15,7 +15,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="speech-bar animated fadeIn" ng-show='inProgress == true'>
+      <div class="speech-bar animated fadeInUp" ng-show='inProgress == true'>
         <button class="btn btn-orange" ng-click='stopCaesar()' ng-show='inProgress == true'>Stop</button>
 
         <p class="caesar-text" ng-bind='caesarSpeech'></p>
@@ -37,7 +37,8 @@
     <div class="form-group col-md-4">
       <div class="show-container">
         <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
-        <h4 class="text-center">Rating: <span ng-bind='recipe.rating | number: 1'></span> | Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
+        <h4 class="text-center">Rating: <span ng-bind='recipe.rating | number: 1'></span> | Servings: <input id="serving-size" class="text-center" ng-change="updateServings()" name="numServings" ng-model="recipe.servings.yieldNumber" ng-maxlength="3"></input></h4>
+
         <h4 class="bg-success text-center" ng-show='saved == true'>Recipe Saved!</h4>
       </div>
       <div id="save-btn"><button class="btn btn-orange" ng-click='saveRecipe()' ng-show='saved == false'>Save recipe</button></div>
