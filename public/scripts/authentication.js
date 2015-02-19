@@ -1,7 +1,13 @@
 angular.module('auth.controllers', ['ngStorage'])
 
-  .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', function($scope, $http, $localStorage, $location) {
-    if ($localStorage.userID) { $location.path('/search_results'); };
+  .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', '$window', function($scope, $http, $localStorage, $location, $window) {
+
+    if ($localStorage.userID) { $location.path('/search_results'); }
+
+    if ($location.search().id) {
+      $localStorage.userID = $location.search().id;
+      $localStorage.token = $location.search().token;
+    }
 
     $scope.signUp = function() {
       $http.post('http://localhost:3000/users/signup/', {
@@ -21,17 +27,12 @@ angular.module('auth.controllers', ['ngStorage'])
     };
 
     $scope.login = function() {
-      $http.post('http://localhost:3000/authenticate', {
-        email: $scope.login_email,
-        password: $scope.login_password
-      })
+      $http.get('http://localhost:3000/facebook_signup')
       .success(function(res, body) {
         if (res.type === false) {
           $scope.error = res.data;
         } else {
-          $localStorage.token = res.token;
-          $localStorage.userID = res.data._id;
-          $location.path('/search_results');
+          $window.location.href = res.url;
         }
       });
     };
@@ -50,4 +51,4 @@ angular.module('auth.controllers', ['ngStorage'])
         return false;
       }
     };
-  }]);
+  }])

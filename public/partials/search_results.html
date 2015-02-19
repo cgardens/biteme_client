@@ -12,7 +12,8 @@
     <div class="recipe-container">
         <div class="col-md-4 recipe-item" ng-repeat='recipe in recipes.results'>
           <div class="img-container">
-            <img class="img-crop" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+            <div class="img-crop" style='background-image: url({{recipe.imageURL}})' alt='recipe photo'>
+            </div>
           </div>
           <div class='recipe-info'>
             <a ng-href='#/recipes/{{recipe.recipeID}}'><h2 class="recipe-title" ng-bind='recipe.title'></h2></a>

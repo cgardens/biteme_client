@@ -41,7 +41,14 @@
 </head>
 <body class="raleway" ng-app='BiteMe'>
   <div class="container-fluid header">
-    <button class="btn btn-orange btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == true" ng-click='logout()'>Logout</button>
+    <div class="buttons">
+      <button class="btn btn-orange btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == true" ng-click='logout()'>Logout</button>
+
+      <button class="btn btn-primary btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == false" ng-click='login()'>Login</button>
+
+      <a href="#/user" class="btn btn-teal btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == true">My Recipes</a>
+    </div>
+
     <p class="title">Bite Me</p>
   </div>
   <ui-view></ui-view>
