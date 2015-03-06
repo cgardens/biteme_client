@@ -2,7 +2,7 @@ angular.module('recipe.controllers')
 
   .controller('NewRecipeCtrl', function($scope, $http, $localStorage) {
     $scope.saveRecipe = function() {
-      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
+      $http.post('http://biteme-server.herokuapp.com/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
         .success(function(data) { $scope.saved = true; })
     }
 
@@ -14,7 +14,7 @@ angular.module('recipe.controllers')
 
       recipe.instructions = formattedInstructions
 
-      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes/custom', { recipeToAdd: recipe })
+      $http.post('http://biteme-server.herokuapp.com/users/' + $localStorage.userID + '/recipes/custom', { recipeToAdd: recipe })
         .success(function(data) { $scope.saved = true; })
     }
 

@@ -10,7 +10,7 @@ angular.module('auth.controllers', ['ngStorage'])
     }
 
     $scope.signUp = function() {
-      $http.post('http://localhost:3000/users/signup/', {
+      $http.post('http://biteme-server.herokuapp.com/users/signup/', {
         firstName: $scope.signup_first_name,
         email: $scope.signup_email,
         password: $scope.signup_password
@@ -27,7 +27,7 @@ angular.module('auth.controllers', ['ngStorage'])
     };
 
     $scope.login = function() {
-      $http.get('http://localhost:3000/facebook_signup')
+      $http.get('http://biteme-server.herokuapp.com/facebook_signup')
       .success(function(res, body) {
         if (res.type === false) {
           $scope.error = res.data;
