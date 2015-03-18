@@ -21,7 +21,6 @@
 }
 
 .recipe-item {
-  /*outline: 1px solid red;*/
   display: inline-block;
   height: 300px;
   min-width: 300px;
@@ -49,4 +48,12 @@
   width: 25px;
   border-radius: 7px;
 
+}
+
+.help {
+  margin-bottom: 40px;
+}
+
+.bottom-spacer {
+  height: 200px;
 }
