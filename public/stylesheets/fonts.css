@@ -19,8 +19,16 @@ a:hover {
 
 .title {
   font-family: 'Satisfy', cursive;
-  font-size: 46px;
+  font-size: 60px;
   color: #e16120;
+  text-align: center;
+  margin: 0;
+}
+
+.phrase {
+  font-family: 'Satisfy', cursive;
+  font-size: 16px;
+  color: gray;
   text-align: center;
 }
 
