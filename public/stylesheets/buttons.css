@@ -40,6 +40,11 @@
   background-color: #3C9892;
 }
 
+#more-info-btn {
+  width: 100%;
+  background-color: #3C9892;
+}
+
 .buttons {
   position: absolute;
 }
