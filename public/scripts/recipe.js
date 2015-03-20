@@ -1,15 +1,21 @@
 angular.module('recipe.controllers', [])
 
-  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage) {
+  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage, $location) {
     // formatting functions
-    $scope.formatIngredients = function() {
+    $scope.formatIngredients = function(multiplier) {
       var formattedIngredients = [];
+      var multiplier = multiplier || $scope.recipe.servings.yieldNumber;
       var ingredients = $scope.recipe.ingredientsVerbose;
       for (i = 0; i < ingredients.length; i++) {
-        var quantity = Ratio.parse(ingredients[i].Quantity).simplify().toLocaleString().trim();
+        var quantity = Ratio.parse(ingredients[i].Quantity / multiplier * $scope.recipe.servings.yieldNumber).simplify().toLocaleString().trim();
         var unitType = ingredients[i].Unit || '';
         var name = ingredients[i].Name.toLowerCase().trim();
-        formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name);
+        var prep = ingredients[i].PreparationNotes || '';
+        if (prep === '') {
+          formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name);
+        } else {
+          formattedIngredients.push(quantity + ' ' + unitType.trim() + ' ' + name + ' (' + prep.toLowerCase().trim() + ')');
+        }
       }
       return formattedIngredients;
     };
@@ -19,33 +25,43 @@ angular.module('recipe.controllers', [])
       var instructions = $scope.recipe.instructions;
       for (i = 0; i < instructions.length; i++) {
         var instruction = instructions[i].toLowerCase().trim();
-        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); };
+        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); }
       }
       return formattedInstructions;
     };
 
     // get request
-    $http.get('http://localhost:3000/recipes/' + $stateParams.recipeId)
+    if ($location.search().custom === 'true') {
+      uri = 'http://bite-me-server.herokuapp.com/users/' + $localStorage.userID + '/customrecipe/' + $stateParams.recipeId;
+    } else {
+      uri = 'http://bite-me-server.herokuapp.com/recipes/' + $stateParams.recipeId;
+    };
+    $http.get(uri)
       .success(function(data) {
         $scope.recipe = data;
         $scope.ingredients = $scope.formatIngredients();
         $scope.instructions = $scope.formatInstructions();
+        $scope.numServings = data.servings.yieldNumber;
         $scope.saved = false;
       })
-    .error(function(data) { console.log('Error: ' + data); })
+    .error(function(data) { console.log('Error: ' + data); });
 
     // save recipe
     $scope.saveRecipe = function() {
-      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeId })
-        .success(function(data) { $scope.saved = true; })
-    }
+      $http.post('http://bite-me-server.herokuapp.com/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
+        .success(function(data) { $scope.saved = true; });
+    };
+
+    // update servings
+    $scope.updateServings = function() {
+      $scope.ingredients = $scope.formatIngredients($scope.numServings);
+    };
 
     // voice start/stop functions
     $scope.inProgress = false;
 
     $scope.startCaesar = function() {
       $scope.inProgress = true;
-      $scope.activateCaesar('Caesar here, at your service.');
       $timeout( function(){ $scope.activateCaesar("Let's begin."); }, 2600);
       $timeout( function(){ $scope.activateCaesar('Your first step is:'); }, 4000);
       $timeout( function(){ $scope.activateCaesar($scope.findStep()); }, 5600);
@@ -66,7 +82,7 @@ angular.module('recipe.controllers', [])
     };
 
     $scope.findStep = function() {
-      return $scope.instructions[$scope.currentStep]
+      return $scope.instructions[$scope.currentStep];
     };
 
     $scope.findIngredient = function(inputIngredient) {
@@ -74,10 +90,9 @@ angular.module('recipe.controllers', [])
       for (var key in ingredients) {
         if (ingredients[key].toLowerCase().indexOf(inputIngredient.toLowerCase()) >= 0) {
           return ingredients[key];
-          break;
         }
       }
-      $scope.activateCaesar("I'm sorry. I do not see " + inputIngredient + ' in this recipe.');
+      return "I'm sorry. I do not see " + inputIngredient + ' in this recipe.';
     };
 
     // caesar response functions
@@ -103,10 +118,11 @@ angular.module('recipe.controllers', [])
 
       function runTimer() {
         if ($scope.seconds === 0) {
-          $interval.cancel(startTimer)
+          $scope.activateCaesar("Your timer has expired.");
+          $interval.cancel(startTimer);
         } else {
-          $scope.seconds--
-        };
+          $scope.seconds--;
+        }
       }
 
       startTimer = $interval(runTimer, 1000);
@@ -117,6 +133,10 @@ angular.module('recipe.controllers', [])
       var commands = {
         // basic commands
         'hey caesar': function() {
+          $scope.activateCaesar('Caesar here, at your service.');
+          // possible need to restart annyang here
+        },
+        'hello caesar': function() {
           $scope.activateCaesar('Caesar here, at your service.');
           // possible need to restart annyang here
         },
@@ -146,7 +166,7 @@ angular.module('recipe.controllers', [])
           $timeout( function(){ $scope.stopCaesar(); }, 2500);
         },
         'caesar help': function() {
-          $scope.activateCaesar('How can I be of assistance?')
+          $scope.activateCaesar('How can I be of assistance?');
           $timeout( function(){ $scope.activateCaesar('You can say things like:'); }, 2300);
           $timeout( function(){ $scope.activateCaesar("'Next step',"); }, 4100);
           $timeout( function(){ $scope.activateCaesar("'Repeat step',"); }, 5100);
@@ -154,7 +174,7 @@ angular.module('recipe.controllers', [])
           $timeout( function(){ $scope.activateCaesar("Or, 'Set a timer for twenty minutes.'"); }, 7600);
         },
         'help caesar': function() {
-          $scope.activateCaesar('How can I be of assistance?')
+          $scope.activateCaesar('How can I be of assistance?');
           $timeout( function(){ $scope.activateCaesar('You can say things like:'); }, 2300);
           $timeout( function(){ $scope.activateCaesar("'Next step',"); }, 4100);
           $timeout( function(){ $scope.activateCaesar("'Repeat step',"); }, 5100);
@@ -162,7 +182,7 @@ angular.module('recipe.controllers', [])
           $timeout( function(){ $scope.activateCaesar("Or, 'Set a timer for twenty minutes.'"); }, 7600);
         },
         'help': function() {
-          $scope.activateCaesar('How can I be of assistance?')
+          $scope.activateCaesar('How can I be of assistance?');
           $timeout( function(){ $scope.activateCaesar('You can say things like:'); }, 2300);
           $timeout( function(){ $scope.activateCaesar("'Next step',"); }, 4100);
           $timeout( function(){ $scope.activateCaesar("'Repeat step',"); }, 5100);
@@ -177,6 +197,18 @@ angular.module('recipe.controllers', [])
           $scope.activateCaesar($scope.findStep());
         },
         'next step': function() {
+          $scope.incrementStep();
+          $scope.activateCaesar($scope.findStep());
+        },
+        'next step caesar': function() {
+          $scope.incrementStep();
+          $scope.activateCaesar($scope.findStep());
+        },
+        'next step please': function() {
+          $scope.incrementStep();
+          $scope.activateCaesar($scope.findStep());
+        },
+        'caesar next step please': function() {
           $scope.incrementStep();
           $scope.activateCaesar($scope.findStep());
         },
@@ -212,13 +244,13 @@ angular.module('recipe.controllers', [])
             ingredient = ingredient.substr(0, length);
             if (ingredient[length - 1] === 'e') {
               ingredient = ingredient.substr(0, length - 1);
-            };
-          };
+            }
+          }
           $scope.activateCaesar($scope.findIngredient(ingredient));
         },
         'how many *ingredient': function(ingredient) {
           var length = ingredient.length - 1;
-          if (ingredient[length] === 's') { ingredient = ingredient.substr(0, length) };
+          if (ingredient[length] === 's') { ingredient = ingredient.substr(0, length); }
           $scope.activateCaesar($scope.findIngredient(ingredient));
         },
 
@@ -238,9 +270,19 @@ angular.module('recipe.controllers', [])
         'set a timer for *time minutes': function(minutes) {
           $scope.setTimer(minutes);
           $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes.');
+        },
+
+        // easter eggs
+        'caesar what is your favorite color': function() {
+          $scope.activateCaesar("Majenta, thank you for asking.");
+        },
+        'caesar tell me a joke': function() {
+          $scope.activateCaesar("Where do animals go when their tails fall off? ");
+          $timeout( function(){ $scope.activateCaesar("The retail store."); }, 5000);
         }
+
       };
       annyang.addCommands(commands);
       annyang.debug();
-    };
-  })
+    }
+  });

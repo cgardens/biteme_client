@@ -16,11 +16,11 @@ angular.module('BiteMe', [ // 'app.factories',
       controller: 'AuthCtrl as a'
     })
 
-    // .state('search', {
-    //   url: '/search',
-    //   templateUrl: 'partials/search_form.html',
-    //   controller: 'SearchFormCtrl as sf'
-    // })
+    .state('new_recipe', {
+      url: '/recipes/new',
+      templateUrl: 'partials/new_recipe.html',
+      controller: 'NewRecipeCtrl as nr'
+    })
 
     .state('search_results', {
       url: '/search_results',

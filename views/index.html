@@ -3,7 +3,17 @@
 <head>
   <!-- css -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link type='text/css' rel='stylesheet' href='../stylesheets/animate.css'>
+  <link type='text/css' rel='stylesheet' href='../stylesheets/buttons.css'>
   <link type='text/css' rel='stylesheet' href='../stylesheets/caesar.css'>
+  <link type='text/css' rel='stylesheet' href='../stylesheets/fonts.css'>
+  <link type='text/css' rel='stylesheet' href='../stylesheets/images.css'>
+  <link type='text/css' rel='stylesheet' href='../stylesheets/layout.css'>
+
+  <!-- fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Lobster|Raleway' rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Dancing+Script|Satisfy' rel='stylesheet' type='text/css'>
 
   <!-- angular and jquery -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js'></script>
@@ -23,14 +33,22 @@
   <script src='../scripts/app_factories.js'></script>
   <script src='../scripts/authentication.js'></script>
   <script src='../scripts/recipe.js'></script>
+  <script src='../scripts/new_recipe.js'></script>
   <script src='../scripts/search.js'></script>
   <script src='../scripts/user.js'></script>
 
-  <title></title>
+  <title>Bite Me</title>
 </head>
-<body ng-app='BiteMe'>
-
+<body class="raleway" ng-app='BiteMe'>
+  <div class="header">
+    <div class="buttons">
+      <button class="btn btn-orange btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == true" ng-click='logout()'>Logout</button>
+      <button class="btn btn-primary btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == false" ng-click='login()'>Login</button>
+      <a href="#/user" class="btn btn-teal btn-xs logout-btn" ng-controller="AuthCtrl" ng-show="isLoggedIn() == true">My Recipes</a>
+    </div>
+    <p class="title">Bite Me</p>
+    <p class="phrase">A hands-free kitchen helper</p>
+  </div>
   <ui-view></ui-view>
-
 </body>
 </html>

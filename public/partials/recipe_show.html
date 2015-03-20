@@ -1,32 +1,74 @@
-<img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
-<h1 ng-bind='recipe.title'></h1>
-<h2 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h2>
-<h3>Rating: <span ng-bind='recipe.rating | number: 1'></span></h3>
-<h3>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h3>
+<div class="container-fluid">
 
-<button ng-click='saveRecipe()' ng-show='saved == false'>Save this recipe</button>
-<p ng-show='saved == true'>You've saved this recipe.</p>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="recipe-info">
+        <h3 ng-bind='recipe.title'></h3>
+        <h4 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div id="start-btn" class="btn btn-orange" ng-click='startCaesar()' ng-show='inProgress == false'>Start Cooking</div>
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+      <div id="info-btn" class="btn btn-primary" ng-show='inProgress == false' ng-click="show=!show">Caesar Commands</div>
+      <h4 ng-show="show" class="text-center">Caesar Commands:</h4></li>
+      <ul>
+        <li ng-show="show"><h5>"Next step" - Get next step in recipe</h5></li>
+        <li ng-show="show"><h5>"Repeat step" - Get last step in recipe</h5></li>
+        <li ng-show="show"><h5>"How much (flour)" - Get quantity of given ingredient</h5></li>
+        <li ng-show="show"><h5>"Set timer for (10) minutes" - Set timer for given duration</h5></li>
+        <li ng-show="show"><h5>"Goodbye Caesar" - End cooking instructions</h5></li>
+        <li ng-show="show"><h5>"Caesar tell me a joke" - Easter egg</h5></li>
+        <li ng-show="show"><h5>"Caesar help" - Prompt Caesar for help</h5></li>
+      </ul>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="speech-bar animated fadeInUp" ng-show='inProgress == true'>
+        <div class="btn btn-orange" ng-click='stopCaesar()' ng-show='inProgress == true'>Stop</div>
 
-<h4>Ingredients:</h4>
-<ul>
-  <li ng-repeat='ingredient in ingredients track by $index' ng-bind='ingredient | fraction'></li>
-</ul>
-<h4>Instructions:</h4>
-<ol>
-  <li ng-repeat='instruction in instructions track by $index' ng-bind='instruction'></li>
-<ol>
+        <p class="caesar-text" ng-bind='caesarSpeech'></p>
 
-<button ng-click='startCaesar()' ng-show='inProgress == false'>Start</button>
-<button ng-click='stopCaesar()' ng-show='inProgress == true'>Stop</button>
+        <div id='countdown'>
+          <p ng-bind='seconds | formatTime' ng-show='seconds > 0'></p>
+        </div>
 
-<p ng-bind='caesarSpeech'></p>
+        <div id='textToSpeech'>
+          <textarea id='text' ng-bind='caesarSpeech'></textarea>
+          <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div id='countdown'>
-  <p ng-bind='seconds | formatTime' ng-show='seconds > 0'></p>
-</div>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <div class="show-container">
+        <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+        <h4 class="text-center">Rating: <span ng-bind='recipe.rating | number: 1'></span> | Servings: <input id="serving-size" class="text-center" ng-change="updateServings()" name="numServings" ng-model="recipe.servings.yieldNumber" ng-maxlength="3"></input></h4>
+        <h4 class="bg-success text-center" ng-show='saved == true'>Recipe Saved!</h4>
+      <div id="save-btn" class="btn btn-orange" ng-click='saveRecipe()' ng-show='saved == false'>Save recipe</div>
+      </div>
+    </div>
 
-<div id='textToSpeech'>
-  <textarea id='text' ng-bind='caesarSpeech'></textarea>
-  <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
-  />
-</div>
+    <div class="col-md-4">
+      <h4>Instructions:</h4>
+      <ol>
+        <li ng-repeat='instruction in instructions track by $index' ng-bind='instruction'></li>
+      <ol>
+    </div>
+
+    <div class="col-md-4 ">
+      <h4>Ingredients:</h4>
+      <ul>
+        <li ng-repeat='ingredient in ingredients track by $index' ng-bind='ingredient | fraction'></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bottom-spacer" ng-show='inProgress == true'></div>
