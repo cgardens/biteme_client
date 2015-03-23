@@ -1,5 +1,4 @@
-angular.module('BiteMe', [ // 'app.factories',
-                           'auth.controllers',
+angular.module('BiteMe', [ 'auth.controllers',
                            'ngStorage',
                            'recipe.controllers',
                            'search.controllers',

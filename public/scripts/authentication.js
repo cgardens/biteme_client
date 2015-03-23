@@ -40,14 +40,13 @@ angular.module('auth.controllers', ['ngStorage'])
     $scope.logout = function() {
       delete $localStorage.userID;
       delete $localStorage.token;
+      $window.location.href = '/';
     };
 
     $scope.isLoggedIn = function() {
       if ($localStorage.userID) {
-        console.log("user is logged in");
         return true;
       } else {
-        console.log("user is logged out");
         return false;
       }
     };

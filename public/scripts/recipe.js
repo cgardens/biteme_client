@@ -134,11 +134,9 @@ angular.module('recipe.controllers', [])
         // basic commands
         'hey caesar': function() {
           $scope.activateCaesar('Caesar here, at your service.');
-          // possible need to restart annyang here
         },
         'hello caesar': function() {
           $scope.activateCaesar('Caesar here, at your service.');
-          // possible need to restart annyang here
         },
         'caesar': function() {
           $scope.activateCaesar('Caesar here, at your service.');
@@ -280,7 +278,6 @@ angular.module('recipe.controllers', [])
           $scope.activateCaesar("Where do animals go when their tails fall off? ");
           $timeout( function(){ $scope.activateCaesar("The retail store."); }, 5000);
         }
-
       };
       annyang.addCommands(commands);
       annyang.debug();
