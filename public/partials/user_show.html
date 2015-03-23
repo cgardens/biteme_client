@@ -13,7 +13,9 @@
           <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
         </div>
         <div class='recipe-info'>
-          <a ng-href='#/recipes/{{recipe.recipeID}}'><h3 ng-bind='recipe.title'></h3></a>
+          <a ng-href='#/recipes/{{recipe.recipeID}}'>
+            <h3 ng-bind='recipe.title'></h3>
+          </a>
           <h4>Rating: <span ng-bind='recipe.rating | number: 1'></span></h4>
         </div>
       </div>
@@ -24,10 +26,27 @@
     <h3>Here are your custom recipes:</h3>
   </div>
 
+  <div class="row">
+    <div class="recipe-container">
+      <div class="form-group col-md-4 recipe-item" ng-repeat='recipe in customRecipes'>
+        <div class="img-container">
+          <img class="recipe-img" ng-src="{{recipe.imageURL}}" alt="recipe photo">
+        </div>
+        <div class="recipe-info">
+          <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'>
+            <h3 ng-bind='recipe.title'></h3>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <ul>
     <li ng-repeat='recipe in customRecipes'>
       <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
-      <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'><h3 ng-bind='recipe.title'></h3></a>
+      <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'>
+        <h3 ng-bind='recipe.title'></h3>
+      </a>
     </li>
   </ul>
 </div>
