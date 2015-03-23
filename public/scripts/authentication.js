@@ -40,7 +40,7 @@ angular.module('auth.controllers', ['ngStorage'])
     $scope.logout = function() {
       delete $localStorage.userID;
       delete $localStorage.token;
-      $window.location.href = "http://bite-me.herokuapp.com/";
+      $window.location.href = '/';
     };
 
     $scope.isLoggedIn = function() {

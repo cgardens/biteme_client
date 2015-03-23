@@ -13,11 +13,14 @@
     <div class="recipe-container">
         <div class="col-md-4 recipe-item" ng-repeat='recipe in recipes.results'>
           <div class="img-container">
-            <div class="img-crop" style='background-image: url({{recipe.imageURL}})' alt='recipe photo'>
-            </div>
+            <a ng-href='#/recipes/{{recipe.recipeID}}'>
+              <div class="img-crop" style='background-image: url({{recipe.imageURL}})' alt='recipe photo'></div>
+            </a>
           </div>
           <div class='recipe-info'>
-            <a ng-href='#/recipes/{{recipe.recipeID}}'><h2 class="recipe-title" ng-bind='recipe.title'></h2></a>
+            <a ng-href='#/recipes/{{recipe.recipeID}}'>
+              <h2 class="recipe-title" ng-bind='recipe.title'></h2>
+            </a>
             <h3 ng-bind='recipe.rating | number : 1'></h3>
           </div>
         </div>
