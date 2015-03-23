@@ -10,7 +10,9 @@
     <div class="recipe-container">
       <div class="form-group col-md-4 recipe-item" ng-repeat='recipe in recipes'>
         <div class="img-container">
-          <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+          <a ng-href='#/recipes/{{recipe.recipeID}}'>
+            <img class="recipe-img" ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+          </a>
         </div>
         <div class='recipe-info'>
           <a ng-href='#/recipes/{{recipe.recipeID}}'>
@@ -30,7 +32,9 @@
     <div class="recipe-container">
       <div class="form-group col-md-4 recipe-item" ng-repeat='recipe in customRecipes'>
         <div class="img-container">
-          <img class="recipe-img" ng-src="{{recipe.imageURL}}" alt="recipe photo">
+          <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'>
+            <img class="recipe-img" ng-src="{{recipe.imageURL}}" alt="recipe photo">
+          </a>
         </div>
         <div class="recipe-info">
           <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'>
