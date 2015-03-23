@@ -36,10 +36,6 @@ angular.module('recipe.controllers')
       }
     }
 
-    // $scope.addIngredient = function () {
-    //   $scope.newCustomRecipe.ingredientsVerbose.push("")
-    // }
-
     $scope.addNewIngredient = function() {
       var newItemNo = $scope.newCustomRecipe.ingredientsVerbose.length+1;
       $scope.newCustomRecipe.ingredientsVerbose.push({'id': newItemNo,
@@ -51,7 +47,6 @@ angular.module('recipe.controllers')
     };
 
     $scope.showAddIngredient = function(ingredient) {
-      // debugger;
       return ingredient.id === $scope.newCustomRecipe.ingredientsVerbose[$scope.newCustomRecipe.ingredientsVerbose.length-1].id;
     };
 
@@ -63,7 +58,6 @@ angular.module('recipe.controllers')
     };
 
     $scope.showAddInstruction = function(instruction) {
-      console.log(instruction)
       return instruction.id === $scope.newCustomRecipe.instructions[$scope.newCustomRecipe.instructions.length-1].id;
     };
   })
