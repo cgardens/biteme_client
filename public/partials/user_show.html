@@ -40,13 +40,4 @@
       </div>
     </div>
   </div>
-
-  <ul>
-    <li ng-repeat='recipe in customRecipes'>
-      <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
-      <a ng-href='#/recipes/{{recipe.customRecipeId}}?custom=true'>
-        <h3 ng-bind='recipe.title'></h3>
-      </a>
-    </li>
-  </ul>
 </div>
