@@ -10,7 +10,7 @@ This was a one-week project at DBC.
 
 Dependencies
 
--NodeJS: [http://nodejs.org/](http://nodejs.org/)
--ExpressJS: [http://expressjs.com/starter/installing.html](http://expressjs.com/starter/installing.html)
--Angular: [https://angularjs.org/](https://angularjs.org/)
+- NodeJS: [http://nodejs.org/](http://nodejs.org/)
+- ExpressJS: [http://expressjs.com/starter/installing.html](http://expressjs.com/starter/installing.html)
+- Angular: [https://angularjs.org/](https://angularjs.org/)
 
